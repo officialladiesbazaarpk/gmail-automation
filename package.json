@@ -1,0 +1,8 @@
+{
+  "name": "gmail-automation",
+  "version": "1.0.0",
+  "description": "Gmail automation via Netlify Functions: form-submit email + scheduled email",
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}
