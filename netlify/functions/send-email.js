@@ -12,9 +12,26 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.handler = async (event) => {
+  // Handle CORS preflight request (browsers send this before POST with JSON body)
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      },
+      body: '',
+    };
+  }
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return {
+      statusCode: 405,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Method not allowed' }),
+    };
   }
 
   let data;
